@@ -1,0 +1,11 @@
+*.pyc
+*.ogv
+*.gov
+PTEducatrachos/settings/base.py
+media/*
+static/*
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+PTEducatrachos/static/*
+home/static/*
