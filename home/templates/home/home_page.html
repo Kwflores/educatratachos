@@ -1,0 +1,871 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+    {% comment %}
+    Delete the line below if you're just getting started and want to remove the welcome screen!
+    {% endcomment %}
+    {% comment %}
+    <link rel="stylesheet" href="{% static 'css/welcome_page.css' %}"> {% endcomment %}
+
+    <!-- Sweet Alert2-->
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+   
+
+{% endblock extra_css %}
+
+{% block content %}
+<div class="banner-slides-wrapper arrow-nav-overflow" data-dots="true" data-nav="true">
+
+    <div class="banner-slides-container owl-carousel owl-theme owl-dot-light-1">
+
+        <!-- Slide item -->
+        {% if page.imagen1 %}
+        <div class="bg-image" data-height="550px"  data-img-src="{% static 'img/fondo_banner.jpg'%}">
+            <div class="container" >
+                <div class="row">
+                    <div class="col-lg-6 d-flex">
+                        <div class="align-self-center w-100 px-md-5 pr-lg-0 pl-lg-3 ml-lg-n3overflow-hidden">
+                            <div class="pl-lg-4 pl-xl-5 text-center text-lg-left add-animate slide-animate"
+                                data-animated="fadeInRight">
+                                {% for block in page.data_imagen1 %} {% if block.block_type == 'titulo' %}
+                                <h4 class="display-6 font-weight-800" style="color: #018ABD;">{{ block.value|upper }}
+                                </h4>
+                                {% endif %} {% if block.block_type == 'descripcion' %}
+                                <h2 class="h3 font-weight-700  mt-4 mt-lg-0 "
+                                    style="color: #97CBDC; text-align: justify;">{{ block.value|truncatewords:45 }}</h2><br>
+                                {% endif %} {% if block.block_type == 'enlace_externo' %}
+                                <a href="{{ block.value }}"
+                                    class="btn btn-round btn-lg btn-primary mx-2 ml-md-0 mr-md-3 "><i
+                                        class="fa fa-info-circle"></i>Más Información</a>
+                                {% endif %} {% if block.block_type == 'enlace_interno' %}
+                                <a href="{% pageurl block.value %}"
+                                    class="btn btn-round btn-lg btn-warning mx-2 ml-md-0 mr-md-3 "><i
+                                        class="fa fa-info-circle"></i>Ver Noticia</a>
+                                      
+                                {% endif %}{% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% image page.imagen1 original as tmp_photo %}
+                    <div class="col-lg-6">
+                        <div class="align-self-end w-100 px-5">
+
+                            <div class="px-md-5 px-lg-4 px-xl-5 mt-md-4 mt-xl-0 py-3">
+                                <img src="{{ tmp_photo.url }}"  alt="{{ tmp_photo.alt }}"
+                                    class="img-fluid mt-20 mt-md-55 mt-lg-0  add-animate slide-animate"
+                                    data-animated="slideInLeft" style="height: 500px;">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Slide item -->
+        {% if page.imagen2 %}
+        <div class="bg-image overflow-hidden" data-height="550px"   data-img-src="{% static 'img/fondo_banner.jpg'%}">
+            <div class="container">
+                <div class="row ">
+                    {% image page.imagen2 original as tmp_photo %}
+                    <div class="col-lg-6 py-4">
+                        <div class="px-4 px-md-5 px-lg-4 pt-5 pt-lg-0 ">
+                            <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"
+                                class="img-fluid mt-4 mt-md-5 mt-lg-0 add-animate slide-animate"
+                                data-animated="slideInUp" style="height: 500px;">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="px-md-5 px-lg-0 py-5">
+                            <div class="text-center px-lg-4">
+
+                                <div class="add-animate slide-animate" data-animated="fadeInDown">
+                                    {% for block in page.data_imagen2 %} {% if block.block_type == 'titulo' %}
+                                    <h4 class="display-5 font-weight-800" style="color: #018ABD;">{{ block.value|upper}}
+                                    </h4>
+                                    {% endif %} {% if block.block_type == 'descripcion' %}
+                                    <h2 class="h3 font-weight-700  mt-4 mt-lg-0 "
+                                        style="color: #97CBDC; text-align: justify;">{{ block.value|truncatewords:45 }}</h2><br>
+                                    {% endif %} {% if block.block_type == 'enlace_externo' %}
+                                    <a href="{{ block.value }}"
+                                        class="btn btn-round btn-lg btn-primary mx-2 ml-md-0 mr-md-3 "><i
+                                        class="fa fa-info-circle"></i>Más Información</a>
+                                    {% endif %} {% if block.block_type == 'enlace_interno' %}
+                                    <a href="/administracion/articulos/{{ block.value }}"
+                                        class="btn btn-round btn-lg btn-warning mx-2 ml-md-0 mr-md-3 "><i
+                                            class="fa fa-info-circle"></i>Ver Noticia</a>
+                                    
+                                    {% endif %}{% endfor %}
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if page.imagen3 %}
+        <div class="bg-image overflow-hidden" data-height="550px"   data-img-src="{% static 'img/fondo_banner.jpg'%}">
+            <div class="container d-flex flex-column">
+                <div class="row ">
+
+                    <div class="col-lg-6 d-flex ">
+                        <div class="align-self-center w-100 px-md-5 pr-lg-0 pl-lg-3 ml-lg-n3 py-5 overflow-hidden">
+                            <div class="pl-lg-4 pl-xl-5 text-center text-lg-left add-animate slide-animate"
+                                data-animated="fadeInRight">
+                                {% for block in page.data_imagen3 %} {% if block.block_type == 'titulo' %}
+                                <h1 class="display-5 font-weight-800" style="color: #018ABD;">{{ block.value|upper }}
+                                </h1>
+                                {% endif %} {% if block.block_type == 'descripcion' %}
+                                <h2 class="h3 font-weight-700  mt-4 mt-lg-0 "
+                                    style="color: #97CBDC; text-align: justify;">{{ block.value|truncatewords:45 }}</h2><br>
+                                {% endif %} {% if block.block_type == 'enlace_externo' %}
+                                <a href="{{ block.value }}"
+                                    class="btn btn-round btn-lg btn-primary mx-2 ml-md-0 mr-md-3 "><i
+                                    class="fa fa-info-circle"></i>Más Información</a>
+                                    {% endif %} {% if block.block_type == 'enlace_interno' %}
+                                    <a href="{% pageurl block.value %}"
+                                    class="btn btn-round btn-lg btn-warning mx-2 ml-md-0 mr-md-3 "><i
+                                    class="fa fa-info-circle"></i>Ver Noticia</a>
+                                {% endif %}{% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% image page.imagen3 original as tmp_photo %}
+                    <div class="col-lg-6 d-flex ">
+                        <div class="align-self-end w-100 px-3">
+                            <div  class="px-md-5 px-lg-4 px-xl-5 mt-md-4 mt-xl-0">
+                                <div class="d-none d-xl-block" data-height="120px"></div>
+                                <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"
+                                    class="img-fluid add-animate slide-animate" data-animated="slideInLeft">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Slide item -->
+        {% if page.imagen4 %}
+        <div class="bg-image overflow-hidden" data-height="550px"   data-img-src="{% static 'img/fondo_banner.jpg'%}">
+            <div class="container ">
+                <div class="row align-items-center">
+                    {% image page.imagen4 original as tmp_photo %}
+
+                    <div class="col-lg-6">
+                        <div class="px-4 px-md-5 px-lg-4 pt-5 pt-lg-0">
+                            <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"
+                                class="img-fluid mt-4 mt-md-5 mt-lg-0 add-animate slide-animate"
+                                data-animated="slideInUp" style="height: 500px;" >
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="px-md-5 px-lg-0 py-5">
+                            <div class="text-center px-lg-4">
+                                <div class="add-animate slide-animate" data-animated="fadeInDown">
+                                    {% for block in page.data_imagen4 %} {% if block.block_type == 'titulo' %}
+                                    <h1 class="display-5 font-weight-800" style="color: #018ABD;">{{ block.value|upper}}</h1>
+                                    {% endif %} {% if block.block_type == 'descripcion' %}
+                                    <h2 class="h3 font-weight-700  mt-4 mt-lg-0 "
+                                        style="color: #97CBDC; text-align: justify;">{{ block.value|truncatewords:45 }}</h2><br>
+                                    {% endif %} {% if block.block_type == 'enlace_externo' %}
+                                    <a href="{{ block.value }}"
+                                    class="btn btn-round btn-lg btn-primary mx-2 ml-md-0 mr-md-3 "><i
+                                    class="fa fa-info-circle"></i>Más Información</a>
+                                    {% endif %} {% if block.block_type == 'enlace_interno' %}
+                                    <a href="{% pageurl block.value %}"
+                                    class="btn btn-round btn-lg btn-warning mx-2 ml-md-0 mr-md-3 "><i
+                                    class="fa fa-info-circle"></i>Ver Noticia</a>
+                                    {% endif %}{% endfor %}
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if page.imagen5 %}
+        <div class="bg-image overflow-hidden" data-height="550px"   data-img-src="{% static 'img/fondo_banner.jpg'%}">
+            <div class="container ">
+                <div class="row ">
+
+                    <div class="col-lg-6 d-flex">
+                        <div class="align-self-center w-100 px-md-5 pr-lg-0 pl-lg-3 ml-lg-n3 py-5 overflow-hidden">
+                            {% for block in page.data_imagen5 %} {% if block.block_type == 'titulo' %}
+                            <h1 class="display-5 font-weight-800" style="color: #018ABD;">{{ block.value|upper }}</h1>
+                            {% endif %} {% if block.block_type == 'descripcion' %}
+                            <h2 class="h3 font-weight-700  mt-4 mt-lg-0 " style="color: #97CBDC; text-align: justify;">
+                                {{ block.value|truncatewords:45 }}</h2><br>
+                            {% endif %} {% if block.block_type == 'enlace_externo' %}
+                            <a href="{{ block.value }}"
+                                class="btn btn-round btn-lg btn-primary mx-2 ml-md-0 mr-md-3 "><i
+                                    class="fa fa-info-circle"></i>Más Información</a>
+                                    {% endif %} {% if block.block_type == 'enlace_interno' %}
+                                    <a href="{% pageurl block.value %}"
+                                        class="btn btn-round btn-lg btn-warning mx-2 ml-md-0 mr-md-3 "><i
+                                            class="fa fa-info-circle"></i>Ver Noticia</a>
+                            {% endif %}{% endfor %}
+                        </div>
+                    </div>
+                    {% image page.imagen5 original as tmp_photo %}
+                    <div class="col-lg-6 d-flex">
+                        <div class="align-self-end w-100 px-5">
+                                <div class="d-none d-xl-block" data-height="120px"></div>
+                                <img src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}"
+                                    class="img-fluid add-animate slide-animate" data-animated="slideInLeft" style="height: 500px;">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+
+    </div>
+
+    <!-- Navigation -->
+    <div class="carousel-custom-nav carousel-nav-lg d-none d-lg-block">
+        <a class="carousel-control-prev" href="#" data-width="9%">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#" data-width="9%">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+</div>
+
+<!-- Recursos -->
+<div class="section bg-light">
+    <div class="container">
+
+        <br> 
+        <div class="row mb-5">
+
+            <!-- ALUMNOS -->
+            <div class="col-md-6 col-lg-4">
+                
+                 
+                <a href="{% slugurl 'repositorio-de-recursos' %}1" id="1" class="text-reset" onClick="alumnos()">
+                    
+                    <div class="bg-white text-center rounded-xl shadow-sm p-4">
+                        <div class="py-4 mt-2">
+                            <img src="{% static 'img/estudiante.png'%}" alt="icon"  class="img-fluid animated pulse infinite" style="animation-duration: 5s;"  data-animated="zoomIn" data-width="150px" data-height="150px">
+                        </div>
+                        <h5 class="font-weight-700">ALUMNOS</h5>
+                        <div class="pb-2">
+                            <p>Encuentra recursos y actividades educativas para fortalecer tu aprendizaje.</p>
+                        </div>
+                    </div>
+                </a>
+                <div data-height="30px"></div>
+            </div>
+
+            <!-- DOCENTES -->
+            {% if user.is_authenticated %}
+                <div class="col-md-6 col-lg-4">
+                    
+                    
+                    <a href="{% slugurl 'repositorio-de-recursos' %}2"  class="text-reset" onClick="docentes()">
+                        
+                        <div class="bg-white text-center rounded-xl shadow-sm p-4">
+                            <div class="py-4 mt-2">
+                                <img src="{% static 'img/profesor.png'%}" alt="icon"  class="img-fluid animated pulse infinite" style="animation-duration: 5s;"  data-animated="zoomIn" data-width="150px" data-height="150px">
+                            </div>
+                            <h5 class="font-weight-700">DOCENTES</h5>
+                            <div class="pb-2">
+                                <p>Encuentra recursos y actividades de apoyo para enriquecer tus clases.</p>
+                            </div>
+                        </div>
+                    </a>
+                    <div data-height="30px"></div>
+                </div>
+            {% else %}  
+                <div class="col-md-6 col-lg-4" data-toggle="modal" data-target="#modalLogin">
+                                
+                    <a id="2" class="text-reset" onClick="docentes()">
+                        
+                        <div class="bg-white text-center rounded-xl shadow-sm p-4">
+                            <div class="py-4 mt-2">
+                                <img src="{% static 'img/profesor.png'%}" alt="icon" class="img-fluid animated pulse infinite" style="animation-duration: 5s;" data-animated="zoomIn" data-width="150px" data-height="150px">
+                            </div>
+                            <h5 class="font-weight-700">DOCENTES</h5>
+                            <div class="pb-2">
+
+                                {% if messages %}
+                                    {% for message in messages%}
+                                        
+                                    <script>
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Oops...',
+                                            text: 'Usuario y/o contraseña incorrecta',
+                                            
+                                        })
+                                    </script>  
+                                    
+                                    
+                                    {% endfor %}
+                                {% endif %}
+
+                                <p>Encuentra recursos y actividades de apoyo para enriquecer tus clases.
+                                    (Click para iniciar sesión)</p>
+                            </div>
+                        </div>
+                    </a>
+                    <div data-height="30px"></div>
+                </div>
+            
+            {% endif %}
+            <!-- PADRES -->
+                <div class="col-md-6 col-lg-4">
+                    <a href="{% slugurl 'repositorio-de-recursos' %}3" id="3" class="text-reset" onClick="padres()">
+                        <div class="bg-white text-center rounded-xl shadow-sm p-4">
+                            <div class="py-4 mt-2">
+                                <img src="{% static 'img/familia.png'%}" alt="icon" class="img-fluid animated pulse infinite" style="animation-duration: 5s;" data-animated="zoomIn" data-width="150px" data-height="150px">
+                            </div>
+                            <h5 class="font-weight-700">PADRES</h5>
+                            <div class="pb-2">
+                                <p>Encuentra recursos y actividades para ayudar a tus hijos a aprender.</p>
+
+                                
+                                
+                            </div>
+                        </div>
+                    </a>
+                
+                </div>            
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-hidden="true">
+                    <div class="modal-dialog modal-l modal-dialog-centered" role="document">
+                        <div class="modal-content rounded-6">
+                            <div class="modal-body p-0">
+
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"></span>
+                                </button>
+
+                                <div class="row">
+ 
+                                    <!-- <div class="col-lg-6 d-none d-lg-block bg-image" data-img-src="../../assets/images/upload/directory-modal-login-img.jpg"></div> -->
+
+                                    <div class="col-lg-12">
+                                        <div class="py-5">
+                                            <div class="px-3 px-xl-5">
+
+                                                <!-- <div class="mb-4 text-center">
+                                                    <img src="../../assets/svg/upload/login-03.svg" alt="Login" data-width="64px" data-height="64px">
+                                                </div> -->
+
+                                                <div class="pb-1"></div>
+                                                <img class="img-fluid" src="{% static 'img/educatrachos1.png'%}" alt="logo"  data-height="100px" >
+
+                                                <h3 class="section-title-4 text-center font-weight-800 pb-3 mb-4">
+                                                    INICIO DE SESIÓN
+                                                    <div class="divider-3 mb-3"></div>
+                                                </h3>
+
+
+                                                <form action="{% url 'signin' %}" method="POST" >
+                                                    {% csrf_token %}
+                                                    <div class="input-group input-group-lg input-group-round mb-4">
+                                                        <div class="input-group-inner">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text input-group-icon"><i class="far fa-user"></i></span>
+                                                            </div>
+                                                            <input type="text" name="username" class="form-control form-control-lg" placeholder="Usuario de Sace">
+                                                            <div class="input-focus-bg"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="input-group input-group-lg input-group-round mb-4">
+                                                        <div class="input-group-inner">
+                                                            <div class="input-group-prepend">
+                                                                <span class="input-group-text input-group-icon"><i class="far fa-eye-slash"></i></span>
+                                                            </div>
+                                                            <input type="password" name="password" class="form-control form-control-lg" placeholder="Contraseña de Sace">
+                                                            <div class="input-focus-bg"></div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div data-height="6px"></div>
+                                                    <center>
+                                                    <button type="submit"  class="btn btn-round btn-lg btn-outline-primary mx-2 mx-lg-3 mb-4"> Entrar</button>
+                                                    </center>
+
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          
+        </div>
+    </div>
+</div>
+ 
+<!-- Sobre Nosotros -->
+<div id="SobreN" class="section bg-white py-5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-6 align-self-end order-2 order-lg-1">
+                <div class="text-center px-md-4 px-lg-0">
+                    <img src="{% static 'img/logo_educatrachos_sobre_nosotros.png'%}" alt="image"
+                        class="img-fluid animated pulse infinite" style="animation-duration: 5s;"
+                        data-animated="fadeInLeft">
+                </div>
+            </div>
+
+            <div class="col-lg-6 align-self-center order-1 order-lg-2">
+                <div class="px-xl-5 pt-2 pb-4 pb-md-5">
+                    <div id="SobreN" class="add-animate " data-animated="fadeInRight">
+                        {% for block in page.sobre_nosotros %}
+                        <div class="mb-5">
+                            {% if block.block_type == 'titulo' %}
+                            <h1 class="display-5 font-weight-800 text-dark">{{ block.value|upper }}</h1>
+                            {% endif %}
+
+                            {% if block.block_type == 'descripcion' %}
+                            {{ block.value|truncatewords:50 }}
+                            {% endif %}
+
+                            {% if block.block_type == 'enlace_externo' %}
+                            <div data-height="10px"></div>
+                            <a href="{{ block.value }}" target="_blank" class="btn btn-lg btn-secondary mb-md-0"><i class=" fa
+                                fa-info-circle"></i>{{ block.value }}</a>
+                            {% endif %} {% if block.block_type == 'enlace_interno1' %}
+                            <a href="{% pageurl block.value %}"  target="_blank"class="btn btn-lg btn-primary mr-3 mb-md-3"><i class=" fa
+                                fa-info-circle"></i>{{ block.value }}</a>
+                            {% endif %} {% if block.block_type  == 'enlace_interno2' %}
+                            <a href="{% pageurl block.value %}"  target="_blank" class="btn btn-lg btn-primary mr-3 mb-md-3"><i class=" fa
+                                fa-info-circle"></i>{{ block.value }}</a>
+                            {% endif %} {% if block.block_type == 'enlace_interno3' %}
+                            <a href="{% pageurl block.value %}" class="btn btn-lg btn-primary mr-3 mb-md-3"><i class=" fa
+                                fa-info-circle"></i>{{ block.value }}</a>
+                            {% endif %} {% if block.block_type == 'enlace_interno3' %}
+                            <a href="{% pageurl block.value %}"  target="_blank" class="btn btn-lg btn-primary mr-3 mb-md-3"><i class=" fa
+                                fa-info-circle"></i>{{ block.value }}</a>
+                            {% endif %} {% if block.block_type == 'enlace_interno1' %}
+                            <a href="{% pageurl block.value %}"  target="_blank" class="btn btn-lg btn-primary mr-3 mb-md-3"><i class=" fa
+                                fa-info-circle"></i>{{ block.value }}</a>
+
+                        </div>
+                        {% endif %}{% endfor %}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<!-- Sitios Externos -->
+<div class="section bg-light">
+    <div class="container">
+
+        <div class="row pt-3 my-5">
+            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                <div class="text-center">
+
+                    <div data-height="3px"></div>
+
+                    <h2 class="h1 section-title-3 text-center font-weight-800">
+                        Aliados
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col">
+                <div class="px-3">
+
+                    <!-- Blog carousel -->
+                    <div class="carousel-component" data-carousel-gutter="30" data-autoplay="true" data-dots="true" data-nav="true" data-carousel-col="1" data-carousel-col-sm="1" data-carousel-col-md="2" data-carousel-col-lg="3" data-carousel-col-xl="3">
+                        <div class="carousel-component-inner owl-carousel owl-theme">
+                        
+                            <!-- Blog carousel item -->
+                            <div class="carousel-component-item">
+                                {% if page.banner1 %}  
+                                <div class="card card-blog-entry border-0 plain-card mb-0">
+                                    <div class="card-blog-img hover-item hover-scale hover-uncaption">
+                                        <div class="hover-transition">
+                                            <div class="hover-down">
+                                                
+                                            </div>
+                                        </div>
+                                        {% image page.banner1 original as tmp_photo %}
+                                        <figure>
+                                            <img class="img-fluid py-5" src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}" >
+                                        </figure>
+                                        {% for block in page.data_banner1 %}
+                                        {% if block.block_type == 'enlace_externo' %}
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="category-btn">
+                                            <a href="{{ block.value}}"  class="btn btn-round btn-sm btn-primary">Ir al sitio</a>
+                                        </div>
+                                        {% endif %}
+                                        {% if block.block_type == 'titulo' %}
+                                        <h5 class="font-weight-700 mt-3">
+                                            <a href="#" class="text-dark-gray"> {{ block.value|upper|truncatewords:20 }}</a>
+                                        </h5>
+                                        {% endif %}
+                                        {% if block.block_type == 'descripcion' %}
+                                            <p class="card-text">{{ block.value|truncatewords:20}}</p>
+                                            <br>
+                                        {% endif %}{% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Blog carousel item -->
+                            <div class="carousel-component-item">
+                                {% if page.banner2 %}  
+                                <div class="card card-blog-entry border-0 plain-card mb-0">
+                                    <div class="card-blog-img hover-item hover-scale hover-uncaption">
+                                        <div class="hover-transition">
+                                            <div class="hover-down">
+                                                
+                                            </div>
+                                        </div>
+                                        {% image page.banner2 original as tmp_photo %}
+                                   
+                                        <figure>
+                                            <img class="img-fluid py-5" src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}" >
+                                        </figure>
+                                   
+                                        {% for block in page.data_banner2 %}{% if block.block_type == 'enlace_externo' %}
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="category-btn">
+                                            <a href="{{ block.value}}" class="btn btn-round btn-sm btn-primary">Ir al sitio</a>
+                                        </div>
+                                        {% endif %}
+                                        {% if block.block_type == 'titulo' %}
+                                        <h5 class="font-weight-700 mt-3">
+                                            <a href="#" class="text-dark-gray">{{ block.value|upper|truncatewords:20 }}</a>
+                                        </h5>
+                                        {% endif %}
+                                        {% if block.block_type == 'descripcion' %}
+                                            <p class="card-text">{{ block.value|truncatewords:20 }}</p>
+                                            <br>
+                                        {% endif %}{% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Blog carousel item -->
+                            <div class="carousel-component-item">
+                                {% if page.banner3 %}  
+                                <div class="card card-blog-entry border-0 plain-card mb-0">
+                                    <div class="card-blog-img hover-item hover-scale hover-uncaption">
+                                        <div class="hover-transition">
+                                            <div class="hover-down">
+                                                
+                                            </div>
+                                        </div>
+                                        {% image page.banner3 original as tmp_photo %}
+                                     
+                                        <figure>
+                                            <img class="img-fluid py-5" src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}" >
+                                        </figure>
+                                   
+                                        {% for block in page.data_banner3 %}{% if block.block_type == 'enlace_externo' %}
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="category-btn">
+                                            <a href="{{ block.value}}"   class="btn btn-round btn-sm btn-primary">Ir al sitio</a>
+                                        </div>
+                                        {% endif %}
+                                        {% if block.block_type == 'titulo' %}
+                                        <h5 class="font-weight-700 mt-3">
+                                            <a href="#" class="text-dark-gray">{{ block.value|upper|truncatewords:20 }}</a>
+                                        </h5>
+                                        {% endif %}
+                                        {% if block.block_type == 'descripcion' %}
+                                            <p class="card-text">{{ block.value|truncatewords:20 }}</p>
+                                            <br>
+                                        {% endif %}{% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+
+                            <!-- Blog carousel item -->
+                            <div class="carousel-component-item">
+                                {% if page.banner4 %}  
+                                <div class="card card-blog-entry border-0 plain-card mb-0">
+                                    <div class="card-blog-img hover-item hover-scale hover-uncaption">
+                                        <div class="hover-transition">
+                                            <div class="hover-down">
+                                                
+                                            </div>
+                                        </div>
+                                        {% image page.banner4 original as tmp_photo %}
+                                        
+                                        <figure>
+                                            <img class="img-fluid py-5" src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}" >
+                                        </figure>
+                                      
+                                        {% for block in page.data_banner4 %}{% if block.block_type == 'enlace_externo' %}
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="category-btn">
+                                            <a href="{{ block.value}}" class="btn btn-round btn-sm btn-primary">Ir al sitio</a>
+                                        </div>
+                                        {% endif %}
+                                        {% if block.block_type == 'titulo' %}
+                                        <h5 class="font-weight-700 mt-3">
+                                            <a href="#" class="text-dark-gray">{{ block.value|upper|truncatewords:20 }}</a>
+                                        </h5>
+                                        {% endif %}
+                                        {% if block.block_type == 'descripcion' %}
+                                            <p class="card-text">{{ block.value|truncatewords:20 }}</p>
+                                            <br>
+                                        {% endif %}{% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+
+                            <!-- Blog carousel item -->
+                            <div class="carousel-component-item">
+                                {% if page.banner5 %}  
+                                <div class="card card-blog-entry border-0 plain-card mb-0">
+                                    <div class="card-blog-img hover-item hover-scale hover-uncaption">
+                                        <div class="hover-transition">
+                                            <div class="hover-down">
+                                                
+                                            </div>
+                                        </div>
+                                        {% image page.banner5 original as tmp_photo %}
+                                       
+                                        <figure>
+                                            <img class="img-fluid py-5"  src="{{ tmp_photo.url }}" alt="{{ tmp_photo.alt }}" >
+                                        </figure>
+                                  
+
+                                        {% for block in page.data_banner5 %}{% if block.block_type == 'enlace_externo' %}
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div class="category-btn">
+                                            <a href="{{ block.value}}" class="btn btn-round btn-sm btn-primary">Ir al sitio</a>
+                                        </div>
+                                        {% endif %}
+                                        {% if block.block_type == 'titulo' %}
+                                        <h5 class="font-weight-700 mt-3">
+                                            <a href="#" class="text-dark-gray">{{ block.value|upper|truncatewords:20 }}</a>
+                                        </h5>
+                                        {% endif %}
+                                        {% if block.block_type == 'descripcion' %}
+                                            <p class="card-text">{{ block.value|truncatewords:20 }}</p>
+                                            <br>
+                                        {% endif %}{% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Un día como hoy -->
+<div class="section pt-5">
+    <div class="container">
+
+        {% if dias_destacados %}
+            
+            <div class="row mt-5">   
+                <div class="col-lg-6 align-self-center">
+                    <div class="px-xl-5 pt-2 pb-4 pb-md-5 mb-5 overflow-hidden">
+                        <div class="add-animate" data-animated="fadeInLeft">
+
+                            <div class="mb-5">
+
+                                <div data-height="3px"></div>
+                                    
+                                <h2 class="h1 section-title-4 text-left font-weight-800 mb-4">
+                                    {{ dias_destacados.titulo }}
+                                    <div class="divider-3"></div>
+                                </h2>
+
+                                <div class="lead-sm pt-2">
+                                    {{ dias_destacados.descripcion|safe }}
+                                </div>
+
+
+                            </div>
+
+                            <div data-height="10px"></div>
+                                
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 align-self-center">
+                    <div class="px-xl-5 pt-2 pb-4 pb-md-5 mb-5 overflow-hidden">
+                        <img src="/media/{{dias_destacados.imagen1.file}}" alt="image"
+                            class="img-fluid animated pulse infinite" style="animation-duration: 5s;"
+                            data-animated="fadeInLeft">
+                    </div>
+
+                </div>
+            </div>
+
+        {% else %} 
+                <div class="row mt-5">   
+                    <div class="col-lg-6 align-self-center">
+                        <div class="px-xl-5 pt-2 pb-4 pb-md-5 mb-5 overflow-hidden">
+                            <div class="add-animate" data-animated="fadeInLeft">
+        
+                                <div class="mb-5">
+
+                                    <h5 class="font-weight-400"></h5>
+        
+                                    <div data-height="3px"></div>
+                                    
+                                    
+                                    <h2 class="h1 section-title-3 text-left font-weight-800">
+                                        Un día como hoy
+                                        <!-- <div class="title-divider-round"></div> -->
+                                    </h2>
+        
+                                    <div class="lead-sm pt-2">
+                                        En esta sección encontrarás todo lo relacionado con fechas importantes que
+                                        ocurren en nuestro país.
+                                    </div>
+        
+                                </div>
+        
+                                <div data-height="10px"></div>
+        
+                                <a href="{% slugurl 'galeria-de-fechas' %}" class="btn btn-lg btn-round btn-primary mr-3"><i
+                                class="fas fa-long-arrow-alt-right"></i>Fechas Destacadas</a>
+        
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 align-self-center">
+                        <div class="px-xl-5 pt-2 pb-4 pb-md-5 mb-5 overflow-hidden">
+                            <img src="{% static 'img/LOGO_SECUNDARIO_SE.png'%}" alt="image"
+                                class="img-fluid animated pulse infinite" style="animation-duration: 5s;"
+                                data-animated="fadeInLeft">
+                        </div>
+                    </div>
+                </div>     
+        {%endif%}
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
+
+
+
+
+{% block js%}
+
+
+<script src="sweetalert2.min.js"></script>
+ 
+ 
+  
+
+<script>
+    const sections = document.querySelectorAll("section");
+    const navLi = document.querySelectorAll("nav .container ul li");
+    window.onscroll = () => {
+        var current = "";
+
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 60) {
+                current = section.getAttribute("id");
+            }
+        });
+
+        navLi.forEach((li) => {
+            li.classList.remove("active");
+            if (li.classList.contains(current)) {
+                li.classList.add("active");
+            }
+        });
+    };
+    function alumnos(){
+        localStorage.setItem('id_dirigido',1)
+ 
+        
+    }
+
+    function docentes(){
+        localStorage.setItem('id_dirigido',2)
+     
+
+    }
+    function padres(){
+        localStorage.setItem('id_dirigido',3)
+     
+    }
+
+    localStorage.removeItem('grado_academico')
+    localStorage.removeItem('filtro_grados')
+    localStorage.removeItem('id_dirigido')
+
+
+    
+  
+ 
+
+</script>
+
+{% endblock js%}
+

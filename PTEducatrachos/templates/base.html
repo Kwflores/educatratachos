@@ -1,0 +1,339 @@
+{% load static wagtailcore_tags wagtailuserbar %}
+{% comment %} {% load menu_tags %}
+{% main_menu template="menus/main_menu.html" sub_menu_template="menus/sub_menu.html" %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="{% static 'assets/favicon.ico' %}">
+    <title>
+        {% block title %}
+        {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+        {% endblock %}
+        {% block title_suffix %}
+        {% wagtail_site as current_site %}
+        {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+        {% endblock %}
+    </title>
+
+<style>
+    .navik-header .bordes {
+        height: 1px;
+        min-height: 5px;
+        -webkit-transition: all .3s ease;
+        transition: all .3s ease;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap
+    }
+
+    .is-sticky .bordes {
+        -webkit-transition: all .3s ease;
+        transition: all .3s ease
+    }
+
+    .navik-header .bordes .borde.gris {
+        background-color: #949699
+    }
+
+    .navik-header .bordes .borde.azul {
+        background-color: #5FD0DF
+    }
+    
+    .navik-header .bordes .borde.rojo {
+        background-color: #DB473C
+    }
+
+    .navik-header .bordes .borde.amarillo {
+        background-color: #ffc600
+    }
+    
+    .navik-header  .borde.verde {
+        background-color: #6dbc4a
+    }
+    
+
+    
+
+</style>
+{% block extra_css %} 
+
+{% endblock extra_css %} 
+
+    <!-- Font Awesome CSS -->
+    <link rel="stylesheet" href="{% static 'node_modules/@fortawesome/fontawesome-free/css/all.min.css' %}">
+
+    <!-- Animate CSS -->
+    <link rel="stylesheet" href="{% static 'node_modules/animate.css/animate.min.css' %}">
+
+    <!-- Fancybox CSS -->
+    <link rel="stylesheet" href="{% static 'node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.css' %}">
+    <link href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <!-- OWL carousel CSS -->
+    <link rel="stylesheet" href="{% static 'node_modules/owl.carousel/dist/assets/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'node_modules/owl.carousel/dist/assets/owl.theme.default.min.css' %}">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+
+</head>
+{% block extra_head %}
+
+
+
+{% endblock extra_head %}
+
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader-container">
+        <div class="preloader-wrapper">
+            <div class="preloader-border"></div>
+            <div class="preloader-line-mask">
+                <div class="preloader-line"></div>
+            </div> 
+        </div>
+    </div>
+    {% wagtailuserbar %}
+    <!-- Navigation menu -->
+    {% comment %} menu dinamico {% endcomment %}
+    {% comment %} {% block menu %}
+
+    {% endblock menu %}
+    {% block subnav %}
+
+    {% endblock subnav %}
+ 
+    {% block submenu %}
+
+    {% endblock submenu %} {% endcomment %}
+
+    {% comment %} menu estatico {% endcomment %}
+  
+    <div class="navik-header header-shadow  navik-mega-menu mega-menu-fullwidth viewport-lg">
+
+     
+
+        <div class="container">
+            <div class="navik-header-container">
+                
+                <!--Logo-->
+                <div class="logo" data-mobile-logo="{% static 'img/educatrachos1.png'%}"  data-sticky-logo="{% static 'img/educatrachos1.png'%}">
+                    <a href="{% slugurl 'plataforma-de-eduactrachos' %}" onClick="limpiarlocal()"><img style="width:250px" src="{% static 'img/educatrachos1.png'%}" alt="logo"/></a>
+                </div>
+                
+                <!-- Burger menu -->
+                <div class="burger-menu">
+                    <div class="line-menu line-half first-line"></div>
+                    <div class="line-menu"></div>
+                    <div class="line-menu line-half last-line"></div>
+                </div>
+        
+                <!--Navigation menu-->
+                <nav class="navik-menu menu-hover-4 menu-caret submenu-top-border submenu-scale">
+                    <ul>
+                        <li class="mega-menu"><a href="{% slugurl 'plataforma-de-eduactrachos' %}" onClick="limpiarlocal()">Inicio</a></li>
+                        <li><a href="#">Portal Educativo</a>
+                            <ul>
+                             
+                                <li><a href="#">Pasaporte de Aprendizaje</a></li>
+                                <li><a href="#">Centro Educativo Virtual</a> </li>
+                                <li><a href="#">Repositorio Educativo</a> </li>
+                                <li><a href="#">Capacitacón Docente</a></li>
+                            </ul>
+                        </li>
+                        <!-- <li><a href="#SobreN" class="scroll-to">Quienes Somos</a></li> -->
+                        <li  ><a href="{% slugurl 'galeria-de-noticias' %}">Noticias</a></li>
+                        <li  ><a href="#" class="scroll-to">Aliados</a></li>
+                        
+                        <li class="mega-menu">
+                         {% if request.user.is_authenticated %}
+                        
+                        <small  class="text-primary font-weight-700">BIENVENIDO, {{request.user.first_name|upper}} {{request.user.last_name|upper}}</small>
+                         
+                         {% else %}
+                         <a href="/admin/login/" target="_blank">Iniciar Sesión</a></li>
+                         {% endif %}
+                         {% if user.is_authenticated %}
+                         <li class="mega-menu">
+                            <a class="text-bg-primary" href="{% url 'signout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                                 
+                        </li>
+                        {% endif %}
+                         
+                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="bordes visible animated fadeIn">
+            <div class="borde col rojo"></div>
+            <div class="borde col amarillo"></div> 
+            <div class="borde col verde"></div> 
+        </div>
+    </div>  
+
+   
+    
+
+    <!-- Content -->
+    <div class="main-content py-0">
+
+        {% block content %}
+
+
+
+        {% endblock content %}
+
+        
+    
+  
+     
+
+    </div>
+
+
+
+    <!-- Footer -->
+    <div class="bg-primary-500 text-white-50">
+
+        <div class="py-3 bg-viridian-300">
+           
+          
+
+
+        <div class="footer-bottom footer-bottom-no-overlay">
+             
+                <div class="container">
+                    <div class="row py-2">
+                        <div class="col text-center">
+                            <div class="widget">
+                                <img class="img-fluid" src="{% static 'img/LOGO_OFICIAL_BLANCO.png'%}" alt="logo"  data-height="190px" >
+                                <br>
+                                <small class="text-white ">SECRETARÍA DE EDUCACIÓN</small>
+                                <br>
+                                <small class="text-white ">Centro Cívico Gubernamental, Cuerpo Bajo B, Tegucigalpa M.D.C., Honduras, C.A</small>
+                                <br>
+                                <small class="text-white ">Teléfonos: (+504) 2226-6200 / Extensión. 1100</small>
+                     
+            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="footer-bottom">
+                    <div class="container footer-bottom-container">
+                        <div class="row py-3">
+                            <div class="col text-center">
+                                <small>© 2022 Copyright Secretaría de Educación <small class="text-white  text-hover-primary"> Desarrollado por USINIEH-SE</small></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             
+        </div>
+
+    </div>
+
+
+    <!-- Go to top -->
+    <div class="go-to-top">
+        <a href="#"><i class="fas fa-chevron-up" ></i></a>
+    </div>
+    
+    <!-- jQuery -->
+    <script src="{% static 'js/vendor/jquery-3.5.1.min.js' %}"></script>
+
+    <!-- Bootstrap js -->
+    <script src="{% static 'node_modules/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Navik Menu js --> 
+    <script src="{% static 'components/navik-navigation-menu/dist/js/navik.menu.js' %}"></script>
+
+    <!-- Isotope and imagesloaded js -->
+    <script src="{% static 'node_modules/isotope-layout/dist/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'node_modules/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <!-- Fancybox js -->
+    <script src="{% static 'node_modules/@fancyapps/fancybox/dist/jquery.fancybox.min.js' %}"></script>
+    
+    <!-- OWL carousel js -->
+    <script src="{% static 'node_modules/owl.carousel/dist/owl.carousel.min.js' %}"></script>
+    
+    <!-- Progress Circle js -->
+    <script src="{% static 'node_modules/jquery-circle-progress/dist/circle-progress.min.js' %}"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
+    <!-- Custom js -->
+    <script src="{% static 'js/custom.js' %}"></script>
+
+    <script>
+        $(function () {
+
+            $('.tooltip-btn').tooltip()
+
+            $('.tooltip-btn-light').tooltip({
+                template: '<div class="tooltip tooltip-light" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+            })
+
+        })
+
+function scrolledIntoView(element) {
+            var docViewTop = $(window).scrollTop(),
+                docViewBottom = docViewTop + $(window).height(),
+                elementTop = $(element).offset().top,
+                elementBottom = elementTop + $(element).height();
+
+            return ((elementBottom > docViewTop) && (elementTop < docViewBottom));
+        }
+
+        function bannerAnimate() {
+            $('.banner-heading-wrap').each(function() {
+                if (scrolledIntoView(this) === true) {
+                    $(this).addClass('banner-text-wrap').removeClass('banner-heading-wrap');
+                }
+            });
+        }
+        bannerAnimate();
+
+        $(window).on("resize scroll", function() {
+            bannerAnimate();
+        });
+
+        $('.scroll-to').on("click", function(e) {
+            e.preventDefault();
+
+            var scrollAttrTop = $( $(this).attr('href') ).offset().top;
+
+            $('body, html').animate({
+				scrollTop: scrollAttrTop
+			}, 600);
+        });
+        function limpiarlocal(){
+            localStorage.removeItem("nivel_academico")
+        }
+        
+
+  
+    </script>
+
+    {% block js %}
+    
+    {% endblock js %}
+
+
+
+
+</body>
+</html>
+
+

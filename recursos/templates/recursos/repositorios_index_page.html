@@ -1,0 +1,580 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% load wagtailcore_tags wagtailimages_tags %} 
+{% block body_class %}template-RepositoriosIndexPage{%endblock %} 
+ 
+
+{% block extra_head %}
+ 
+
+{% endblock extra_head %} 
+{% block extra_css %} 
+<style>
+  .module {
+    width: 250px;
+    margin: 0 0 1em 0;
+    overflow: hidden;
+  }
+  
+  .module p {
+    margin: 0;
+  }
+  
+  .line-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
+    .pagination .example-1 {
+        display:inline-block;
+        padding:5px;
+      }
+
+    a {
+    text-decoration: none;
+    }
+
+    h1 {
+    font-family: "Open Sans", sans-serif;
+    font-weight: 200;
+    }
+
+    .rows {
+    max-width: auto;
+     
+    
+    }
+    div.rows {
+        display: flex;
+        flex-direction: row;
+        
+      }
+
+      @media (max-width: 800px) {
+        div.rows{
+          flex-direction: column;
+          margin: auto;
+          justify-content: space-between; 
+          width: 700px;
+          margin-bottom : 20px
+          
+        
+  
+         
+        }
+         
+      }
+
+    .cards {
+    float: left;
+    padding: 0 1.7rem;
+    width: 50%;
+    }
+    .cards .menu-content {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    }
+    .cards .menu-content::before, .cards .menu-content::after {
+    content: "";
+    display: table;
+    }
+    .cards .menu-content::after {
+    clear: both;
+    }
+    .cards .menu-content li {
+    display: inline-block;
+    }
+    .cards .menu-content a {
+    color: #fff;
+    }
+    .cards .menu-content span {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: "Open Sans";
+    transform: translate(-50%, 0);
+    }
+    .cards .wrapper {
+    background-color: #fff;
+    min-height: 450px;
+    width: 300px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.2);
+    }
+    .cards .wrapper:hover .data {
+    transform: translateY(0);
+    }
+    .cards .data {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transform: translateY(calc(70px + 1em));
+    transition: transform 0.3s;
+    }
+    .cards .data .content {
+    padding: 1em;
+    position: relative;
+    z-index: 1;
+    }
+    .cards .author {
+    font-size: 12px;
+    }
+    .cards .title {
+    margin-top: 10px;
+    }
+    .cards .text {
+    height: 70px;
+    margin: 0;
+    }
+    .cards input[type=checkbox] {
+    display: none;
+    }
+    .cards input[type=checkbox]:checked + .menu-content {
+    transform: translateY(-60px);
+    }
+ 
+    .example-1 .date {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #Db473c;
+    color: #fff;
+    padding: 0.8em;
+    }
+    .example-1 .date span {
+    display: flex;
+    text-align: center;
+    }
+    .example-1 .date .day {
+    font-weight: 700;
+    font-size: 24px;
+    text-shadow: 2px 3px 2px rgba(0, 0, 0, 0.18);
+    }
+    .example-1 .date .month {
+    text-transform: uppercase;
+    }
+    .example-1 .date .month,
+    .example-1 .date .year {
+    font-size: 12px;
+    }
+    .example-1 .content {
+    background-color: #fff;
+    box-shadow: 0 5px 30px 10px rgba(0, 0, 0, 0.3);
+    }
+    .example-1 .title a {
+    color: gray;
+    }
+    .example-1 .menu-button {
+    position: absolute;
+    z-index: 999;
+    top: 16px;
+    right: 16px;
+    width: 25px;
+    text-align: center;
+    cursor: pointer;
+    }
+    .example-1 .menu-button span {
+    width: 5px;
+    height: 5px;
+    background-color: gray;
+    color: gray;
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+    }
+    .example-1 .menu-button span::after, .example-1 .menu-button span::before {
+    content: "";
+    display: block;
+    width: 5px;
+    height: 5px;
+    background-color: currentColor;
+    position: absolute;
+    border-radius: 50%;
+    }
+    .example-1 .menu-button span::before {
+    left: -10px;
+    }
+    .example-1 .menu-button span::after {
+    right: -10px;
+    }
+    .example-1 .menu-content {
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+    transition: transform 0.3s;
+    transform: translateY(0);
+    }
+    .example-1 .menu-content li {
+    width: 33.333333%;
+    float: left;
+    background: #949699;
+    height: 60px;
+    position: relative;
+    }
+    .example-1 .menu-content a {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    }
+    .example-1 .menu-content span {
+    top: -10px;
+    }
+ 
+</style>
+
+<!-- Sweet Alert2-->
+<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+{% endblock extra_css %} 
+{%block content %}
+<!-- Navbar section -->
+<div class="container-fluid">
+  <div class="row">
+    <aside class="col-md-2">
+      <div class="card">
+        
+        <article class="filter-group">
+          <header class="card-header">
+            <a
+              href="#"
+              data-toggle="collapse"
+              data-target="#collapse_1"
+              aria-expanded="true"
+              class=""
+            >
+              <i class="icon-control fa fa-chevron-down"></i>
+              <h6 class="title">GRADOS</h6>
+            </a>
+          </header>
+          <div id="hola" class="filter-content collapse show" id="collapse_1" >
+            <div class="card-body">
+              <div id="grados" >
+                <form action="" id="prueba">
+                  {% for item in grados %}
+                        
+                          <label class="custom-control custom-radio">
+                              <input type="radio" id="grado_sin_filtro{{ item.id}}" class="custom-control-input" id="status"  name="status" value="interesado" />
+                              <div class="custom-control-label" checked onClick="clases_grados({{ item.id}})"> {{ item.nombre}}</div>
+                          </label>
+                        
+                          
+                     
+                  {% endfor %}
+                </form>        
+                    </div>
+
+                <div id="grados_filtrados" style="display:none" >
+                 
+                </div>
+
+            </div>
+           
+      
+        </article>
+        <!-- filter-group  .// -->
+        <article class="filter-group">
+          <header class="card-header">
+            <a
+              href="#"
+              data-toggle="collapse"
+              data-target="#collapse_2"
+              aria-expanded="true"
+              class=""
+            >
+              <i class="icon-control fa fa-chevron-down"></i>
+              <h6 class="title">CLASES</h6>
+            </a>
+          </header>
+          <div class="filter-content collapse show" id="collapse_2" >
+            <div class="card-body">
+              <div id="clases">
+                <form   id="clases_sin_filtro">
+               
+                    {% for item in clases %}
+       
+                      <label   class="custom-control custom-checkbox">
+                          <input type="checkbox"  class="custom-control-input" />
+                          <div   class="custom-control-label">
+                              {{item.nombre}}
+                          </div>
+                      </label>
+                    {% endfor %}
+                </form>
+
+                  <form   id="clases_filtradas" style="display:none" >
+                      {% for item in clases %}
+                     
+                        <label class="custom-control custom-radio" id="chk{{item.id}}"  >
+                            <input type="radio" class="custom-control-input" name="flexRadioDefault" id="flexRadioDefault2" checked />
+                            <div id="c_f{{item.id}}" class="custom-control-label">
+                            </div>
+                        </label>
+                      {% endfor %}
+                  </form>
+              </div>
+              <div id="clases_por_grado">
+
+              </div>
+            </div>
+            <!-- card-body.// -->
+          </div>
+       
+        </article>
+ 
+      </div>
+      <!-- card.// -->
+    </aside>
+   
+    <main class="col-md-9  py-2">
+      <header class="border-bottom mb-4 pb-3">
+        <div class="section ">
+          <div class="row py-2">
+            <div class="col-md-4">
+              <div class="form-inline py-4">
+                <form  id="form_nivel_academico"  enctype="multipart/form-data" method="POST" class="pb-3 form-control-xlarge">
+                <select  id="nivel_academico" onchange="ShowSelected();" class="form-control custom-select form-control-xlarge full-size w-100">
+                    <option  >SELECCCIONE EL NIVEL ACADÉMICO</option>
+                    {% for item in nivel_academico%}
+                    <option value="{{ item.id }}" >{{ item.nivel_academico }}</option>
+                    {% endfor %}
+                    <option value="0">TODO LOS NIVELES</option>
+                  </select>
+                </form>
+             
+            </div>
+          
+            </div>
+            {% regroup repositorio by dirigido_a as newlist %}
+            
+            {% for r in newlist %}
+            
+            {% if r.grouper == '1' %}
+            <div class="col-md-8">
+              <div class="text-right">
+                <h2 style="align:right" class="font-weight-800"> REPOSITORIO DE ALUMNOS <img src="{% static 'img/estudiante.png'%}" style="height:75px" alt="image" class="justify-content-lg-start"></h2>
+              </div>
+             
+            </div>
+            
+          
+            {% elif r.grouper == '2' %}
+            <div class="col-md-8">
+              <div class="text-right">
+                <h2 style="align:right" class="font-weight-800"> REPOSITORIO DE DOCENTES <img src="{% static 'img/profesor.png'%}" style="height:75px" alt="image" class="justify-content-lg-start"></h2>
+              </div>
+             
+            </div>
+            
+            {% elif r.grouper == '3' %}              
+            <div class="col-md-8">
+              <div class="text-right">
+                <h2 style="align:right" class="font-weight-800"> REPOSITORIO DE PADRES<img src="{% static 'img/familia.png'%}" style="height:75px" alt="image" class="justify-content-lg-start"></h2>
+              </div>
+             
+            </div>
+            {% endif %}
+            {% endfor %}
+      </div> 
+        
+
+         
+          
+          
+            {% if messages %}
+            {% for message in messages%}
+                
+            <script>
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'info',
+                title: 'Bienvenido(a)'
+              })
+            </script>  
+            
+               
+            {% endfor %}
+        {% endif %}
+
+          
+      </header>
+      <!-- sect-heading -->
+      <div id="repositorios" class="row mb-5">
+ 
+        {% for r in repositorio %}
+        
+        <div class="col-md-6 col-lg-3">
+        <div class="example-1 cards mb-5">
+          <div class="wrapper"  >
+            <a href="{% url 'repositorio_detalle' r.page_ptr_id %}">
+            <figure>
+                <img class="card-img" src="/media/{{r.imagen_portada_id__file}}" alt="image">
+            </figure>
+            <div class="date">
+              <span class="day">{{r.grados_id}}°</span>
+              <span class="month">Grado</span>
+            </div>
+            <div class="data">
+              <div class="content">
+                <span class="author">{{r.grados_id__nivel_academico__nivel_academico}}</span>
+                <h3 class="p text-justify font-weight-800">{{r.titulo|upper}}</h3>
+                <p>{{r.descripcion|safe|truncatewords:20}}</p>
+                <span class="author">No. de visitas: {{r.visitas}}</span>
+              </a>
+            </div>
+             
+               
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    
+        {% endfor %}
+      </div>
+      <div id="repositorio" class="row mb-5">
+    
+      </div>
+     
+      <div id="advertencia" style="display:none">
+        <div class="alert alert-danger alert-icon alert-dismissible fade show mb-5" role="alert">
+          <i class="far fa-times-circle"></i>
+          <strong>Grado Seleccionado!</strong> No cuenta con recursos diponibles para este apartado 
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true"></span>
+          </button>
+      </div>
+      
+      </div>
+
+      <!-- row end.// -->
+      <div id="advertencia_clase" style="display:none">
+        <div class="alert alert-danger alert-icon alert-dismissible fade show mb-5" role="alert">
+          <i class="far fa-times-circle"></i>
+          <strong>CLase Seleccionada!</strong> No cuenta con recursos diponibles para este apartado 
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true"></span>
+          </button>
+      </div>
+   
+    </main>
+  </div>
+</div>
+
+{% endblock content %} 
+{% block js%} 
+
+<script src="sweetalert2.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
+ 
+<script src="sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  
+    
+
+
+    function ShowSelected(){
+    div_grados = document.getElementById("grados")
+    grados = div_grados.getElementsByTagName("label");
+    num = [grados][0].grados2;
+    document.getElementById("advertencia_clase").style.display ="none"
+    document.getElementById("advertencia").style.display ="none"
+    combo = document.getElementById("nivel_academico");
+    selected = combo.options[combo.selectedIndex].value;
+    localStorage.setItem('nivel_academico',selected);
+    }
+
+    nivel_academico.addEventListener("change",async()=>{
+
+        clase_filtrada = document.getElementById("grados_filtrados").innerHTML = '';
+        clase_filtrada = document.getElementById("repositorio").innerHTML = '';
+        grados_nivelacademico()
+        cargar_repositorio_nivel()
+    })
+   
+    id_dirigido = localStorage.getItem('id_dirigido')
+    
+    
+    if (localStorage.getItem("nivel_academico") && localStorage.getItem("grados_filtrados") ) {
+        localStorage.removeItem('filtro_grados')
+        grados_nivelacademico()
+        cargar_repositorio_nivel()
+
+    }
+    if(localStorage.getItem('grado_academico')){
+      grado = localStorage.getItem('grado_academico')
+      clases_grados(grado)
+    }
+    
+    if(localStorage.getItem('filtro_grados')== "0"){
+        grado = localStorage.getItem('grado_academico')
+        
+        id_nivel = localStorage.getItem('nivel_academico')
+        clase_filtrada = document.getElementById("repositorio").innerHTML = '';
+        
+
+
+        fetch("/grados/" + "0/0")
+        .then(response => response.json())
+        .then(data => {
+            data.grados.forEach(element => {
+                if (element.nivel_academico_id == id_nivel) {
+                    document.getElementById("grados_filtrados").style.display = "block"
+                    document.getElementById("grados").style.display = "none"
+                    clase_filtrada = document.getElementById("grados_filtrados")
+                    label = document.createElement('label')
+                    label.setAttribute('id', 'grado_' + element.id)
+                    label.classList = 'custom-control custom-radio'
+                    input = document.createElement('input')
+                    input.setAttribute('id',  element.id)
+
+                    input.setAttribute('type', 'radio')
+                    input.classList = 'custom-control-input'
+                    div = document.createElement('div')
+                    div.classList = 'custom-control-label'
+                    div.setAttribute('onClick', 'clases_grados(' + element.id + ')')
+                    div.innerHTML = element.nombre
+                    clase_filtrada.appendChild(label)
+                    label.appendChild(input)
+                    label.appendChild(div)
+                }
+              });
+            });
+      
+
+    }
+
+
+
+
+
+    
+</script>
+
+
+
+
+{% endblock js%}
+

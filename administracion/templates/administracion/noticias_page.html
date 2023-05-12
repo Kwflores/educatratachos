@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %} 
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+{% comment %}
+Delete the line below if you're just getting started and want to remove the welcome screen!
+{% endcomment %}
+{% comment %}
+<link rel="stylesheet" href="{% static 'css/welcome_page.css' %}"> {% endcomment %}
+{% endblock extra_css %}
+
+{% block content %}
+ 
+<div class="section w-100 mt-4 mb-5">
+    <div class="container">
+
+        <div class="row my-5">
+            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2" >
+                <div class="text-center">
+
+                    <h2 class="h1 section-title-3 text-center font-weight-800" >
+                        Galería de Artículos
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+
+        
+           
+
+        </div>
+
+    </div>
+</div>
+ 
+<div id="masonryGallery" class="row grid-item-layout mb-2 mt-2 ml-1 mr-1 " data-gutter="32" data-layout-mode="masonry">
+    
+    <!-- Grid item -->
+
+    {% for item in articulos_noticias%}
+    {% if item.page_ptr_id__id ==  item.page_ptr_id %}
+
+    <div class="col-md-6 col-lg-4 grid-item cat-all cat-lifestyle">
+        <div class="card card-gallery border-0 shadow mb-0">
+    
+            <div class="card-img-wrapper hover-item hover-scale">
+    
+                 <a  href="{{item.page_ptr_id__slug}}">
+                         
+                        <div class="hover-transition">
+                            <div class="hover-up">
+                                <h5 class="hover-title font-weight-700 mb-1">{{ item.titulo|truncatewords:10 }}</h5>
+                                <div class="hover-desc">{{ item.descripcion|safe|truncatewords:10}}</div>
+                                
+                            </div>
+                        </div>
+                        <figure>
+                            <img class="card-img" src="/media/{{item.imagen1_id__file}}" alt="image">
+                        </figure>
+                    </a>
+                <div class="card-gallery-meta">
+                    <div >
+                        <a href="#"> Artículo publicado el: {{ item.last_published_at|date:"d-M-Y" }}</a> 
+                    </div>
+                </div>
+                
+            </div>
+    
+        </div>
+    </div>
+
+    
+    {% endif %}
+                
+    {% endfor %}
+    
+
+
+
+{% endblock content %}
+
+{% block js%}
+
+{% endblock js%}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-homepage{% endblock %}
+
+{% block extra_css %}
+
+{% comment %}
+Delete the line below if you're just getting started and want to remove the welcome screen!
+{% endcomment %}
+{% comment %}
+<link rel="stylesheet" href="{% static 'css/welcome_page.css' %}"> {% endcomment %}
+{% endblock extra_css %}
+
+{% block content %}
+ 
+<div class="col-md-12">
+    <div class="text-center">
+        <br>
+        <h2 class="h1 font-weight-800 ">PLATAFORMAS VIRTUALES</h2>
+    </div>
+</div>
+<div class="section bg-light py-5">
+    <div class="container">
+
+
+        <div class="row">
+            {% if page.bloque_enlaces.all %} {% for item in page.bloque_enlaces.all %}
+            {% for block in item.enlaces %}
+            <div class="col-md-6 col-lg-3 hover-item hover-box-shadow">
+                <a href="{{ block.value }}" class="text-reset">
+                    <div class="bg-white text-center hover-inner-wrap rounded-xl shadow-sm p-4">
+                        <div class="py-4 mt-2 text-primary">
+                            <i class="fa fa-user fa-4x " aria-hidden="true"></i>
+                        </div>
+
+                        <div class="pb-2">
+                            <p>{{ item.titulo }}</p>
+                        </div>
+                        <h5 class="font-weight-700 text-primary">INICIAR SESIÓN<h5>
+                    </div>
+                </a>
+                <div data-height="30px"></div>
+                
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% endif %}
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock content %}
+
+{% block js%}
+ 
+{% endblock js%}

@@ -1,0 +1,198 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% load wagtailcore_tags wagtailimages_tags %} 
+{% block body_class %}template-RepositoriosIndexPage{%endblock %} 
+ 
+
+{% block extra_head %}
+ <style>
+    div.dataTables_wrapper div.dataTables_filter input {
+        margin-left: 0.5em;
+        display: inline-block;
+        width: 800px;
+      }
+ </style>
+
+{% endblock extra_head %} 
+{% block extra_css %} 
+ 
+
+<!-- Sweet Alert2-->
+<link rel="stylesheet" href="sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+{% endblock extra_css %} 
+{%block content %}
+{% if data_repositorio != None%}
+<div class="section ">
+    <div class="container">
+        <div class="row py-5">
+            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                <div class="text-center">
+                    <div data-height="3px"></div>
+                    
+                    <h2 style="align:justify" class="h1 section-title-4 font-weight-800">
+                        {{data_repositorio.page_id__titulo}}
+                        <div class="title-divider-round"></div>
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-center py-4">
+
+            <div class="col-lg-4">
+                <div class="text-center mb-3 mb-lg-0">
+                    <img src="/media/{{data_repositorio.page_id__imagen_portada_id__file}}" style="height:500px" alt="image" class="img-fluid">
+                </div>
+            </div>
+
+            <div class="col-lg-8 jus">
+                <div class="pl-xl-5">
+                    <p style="text-align:justify"><b>NIVEL ACADEMICO:</b> {{data_repositorio.page_id__grados__nivel_academico__nivel_academico|upper}} </p>
+                    <p style="text-align:justify"><b>GRADO ACADEMICO:</b> {{data_repositorio.page_id__grados_id__nombre|upper}}</p>
+                    <h7 style="text-align:justify">{{data_repositorio.page_id__descripcion|safe}}</h7>
+                </div>
+            </div>
+
+        </div>
+      
+
+    </div>
+</div> 
+<div class="row py-5">
+    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+        <div class="text-center">
+            <div data-height="3px"></div>
+
+            <h2 class="h1 section-title-4 font-weight-800">
+                 RECURSOS DISPONIBLES
+                <div class="title-divider-round"></div>
+            </h2>
+        
+        </div>
+    </div>
+</div>
+{% else %}
+{% for r in repositorio %}
+<div class="row py-5">
+    <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+        <div class="text-center">
+            <div data-height="3px"></div>
+                <div class="text-center mb-3 mb-lg-0">
+                    <img src="/media/{{r.imagen_portada_id__file}}" style="height:350px" alt="image" class="img-fluid">
+                </div>
+                <h2 class="h1 section-title-4 font-weight-800">
+                    {{r.nombre|upper}}
+                </h2>
+            <div class="title-divider-round"></div>
+
+
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif%}
+ 
+<div class="col-1"></div>
+<div class="col-10  container py-4">
+    <table id="recursos_repositorio" class="table table-hover mb-5 ">
+        <thead>
+            <tr>
+                <th scope="col">Recurso</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Macromedia</th>
+                <th scope="col">Descargar Archivo Macromedia</th>
+                <th scope="col">Videos</th>
+                <th scope="col">Pdf</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Enlaces Internos</th>
+                <th scope="col">Enlaces Externos</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in repositorio %}
+        
+            <tr>
+                <td>{{r.nombre}}</td>
+                <td align="justify">{{r.descripcion|safe}}</td>
+                
+                <td align="center">
+                    {%if r.macromedia != ''%}
+                    <button type="button" class="btn btn-round btn-lg btn-icon-only btn-primary mx-2 mx-lg-3 mb-4"><a href="/media/repositorio/macromedia/{{r.id}}/index.html" target="_blank" class="text-white"><i class="fas fa-eye"></i></a></button>
+                    {% endif %}
+                </td>
+                <td align="center">
+                    {%if r.macromedia != ''%}
+                    <button type="button" class="btn btn-round btn-lg btn-icon-only btn-danger mx-2 mx-lg-3 mb-4"><a href="/media/{{r.macromedia}}" target="_blank" class="text-white"><i class="fas fa-cloud-download-alt"></i></a></button>
+                    {% endif %}
+                    
+                </td>
+                <td    align="center">
+                    {%if r.video != ''%}
+                    <button type="button" class="btn btn-round btn-lg btn-icon-only btn-secondary mx-2 mx-lg-3 mb-4"><a href="/media/{{r.video}}" target="_blank" class="text-white"><i class="fas fa-video"></i></a></button>
+                    {% endif %}
+                </td>
+                <td   align="center"> 
+                    {%if r.pdf != ''%}
+                    <button type="button" class="btn btn-round btn-lg btn-icon-only btn-info mx-2 mx-lg-3 mb-4"><a href="/media/{{r.pdf}}" target="_blank" class="text-white"><i class="fas fa-file-pdf"></i></a></button>
+                    {% endif %}
+                </td>
+                <td  align="center"> 
+                    {%if r.imagen_id__file != none %}
+                    <button type="button" class="btn btn-round btn-lg btn-icon-only btn-secondary mx-2 mx-lg-3 mb-4"><a href="/media/{{r.imagen_id__file}}" target="_blank" class="text-white"><i class="fas fa-image"></i></a></button>
+                    {% endif %}
+                </td/>
+                <td  align="center"> 
+                {% for d in r.data%}
+                    {% if d.block_type == 'enlace_interno' %}
+                        <button type="button" class="btn  btn-round btn-lg btn-icon-only  btn-dark mx-2 mx-lg-3 mb-4"><a href="{% pageurl d.value %}" target="_blank" class="text-white"><i class="fas fa-anchor"></i></a></button>
+                    {% endif %}
+                {% endfor %}
+                </td/>
+                <td  align="center"> 
+                    {% for d in r.data%}
+                        {% if d.block_type == 'enlace_externo' %}
+                            <button type="button" class="btn  btn-round btn-lg btn-icon-only  btn-warning mx-2 mx-lg-3 mb-4"><a href="{{ d.value }}" target="_blank" class="text-white"><i class="fas fa-paper-plane"></i></a></button>
+                        {% endif %}
+                    {% endfor %}
+                    
+                </td/>
+            </tr>
+            {% endfor %} 
+        </tbody>
+    </table>
+</div>
+<div class="col-1"></div>
+
+
+{% endblock content %} 
+{% block js%} 
+
+ 
+<script src="{% static 'js/main.js' %}"></script>
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHvegtg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.js" integrity="sha512-3FKAKNDHbfUwAgW45wNAvfgJDDdNoTi5PZWU7ak3Xm0X8u0LbDBWZEyPklRebTZ8r+p0M2KIJWDYZQjDPyYQEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function () {
+        $('#recursos_repositorio').DataTable({
+            "bLengthChange": false,
+            "bInfo": true,
+            "pageLength": 10,
+            "orderable": true,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.16/i18n/Spanish.json"
+            },
+            
+            
+        });
+        $('.dataTables_filter input').attr("placeholder", "Buscar Recursos en la tabla")
+    });
+</script>
+{% endblock js%}
+

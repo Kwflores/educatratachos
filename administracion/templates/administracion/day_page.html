@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block body_class %}template-articulopage{% endblock %}
+
+{% block extra_css %}
+
+{% comment %}
+Delete the line below if you're just getting started and want to remove the welcome screen!
+{% endcomment %}
+{% comment %}
+<link rel="stylesheet" href="{% static 'css/welcome_page.css' %}"> {% endcomment %}
+{% endblock extra_css %}
+
+{% block content %}
+
+<div class="section w-100 mt-4 mb-5">
+    <div class="container">
+
+        <div class="row my-5">
+            <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+                <div class="text-center">
+
+                    <h2 class="h1 section-title-3 text-center font-weight-800">
+                        Fechas Destacadas
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+    </div>
+</div>
+
+<!-- Masonry gallery container -->
+<div id="masonryGallery" class="row grid-item-layout mb-2 mt-2 ml-1 mr-1 " data-gutter="32" data-layout-mode="masonry">
+    
+    <!-- Grid item -->
+
+    {% for item in dias_destacados %}
+    <div class="col-md-6 col-lg-4 grid-item cat-all cat-lifestyle">
+        
+        <div class="card card-gallery border-0 shadow mb-0">
+            
+            <div class="card-img-wrapper hover-item hover-scale">
+                    
+                    <div class="hover-transition">
+                        <div class="hover-down">
+                           
+                        </div>
+                        <div class="hover-up">
+                            <h5 class="hover-title font-weight-700 mb-1">{{ item.titulo }}</h5>
+                            <div class="hover-desc">{{ item.descripcion|safe }}</div>
+                        </div>
+                    </div>  
+                    <figure>
+                        <img class="card-img" src="/media/{{item.imagen1_id__file}}" alt="image">
+                    </figure>
+                </a>
+    
+                <div class="card-gallery-meta">
+                    <div class="meta-item meta-light-2 float-left">
+                        <a href="#"><i class="far fa-calendar-alt"></i>{{item.fecha|date:"d-M" }}</a>
+                    </div>
+                    <!-- <div class="meta-item meta-light-2 float-right">
+                        <a href="#"><i class="far fa-heart"></i>Like</a>
+                    </div> -->
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+    {% endfor %}
+ 
+    
+</div>
+
+
+
+
+{% endblock content %}
+
+{% block js%}
+ 
+{% endblock js%}
